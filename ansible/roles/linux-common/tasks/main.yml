@@ -1,0 +1,50 @@
+---
+- name: Set timezone to UTC
+  community.general.timezone:
+    name: UTC
+
+- name: Update apt cache and upgrade packages (Debian/Ubuntu)
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: safe
+  when: ansible_os_family == "Debian"
+
+- name: Upgrade packages (RHEL/Rocky)
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+    update_cache: true
+  when: ansible_os_family == "RedHat"
+
+- name: Install baseline packages
+  ansible.builtin.package:
+    name:
+      - curl
+      - vim
+      - chrony
+    state: present
+
+- name: Ensure chrony is enabled and running
+  ansible.builtin.systemd:
+    name: chronyd
+    enabled: true
+    state: started
+  when: ansible_os_family == "RedHat"
+
+- name: Ensure chrony is enabled and running (Debian/Ubuntu)
+  ansible.builtin.systemd:
+    name: chrony
+    enabled: true
+    state: started
+  when: ansible_os_family == "Debian"
+
+# Password auth is intentionally left enabled here: the Packer build itself
+# authenticates as the build-time account over SSH password auth, and
+# disabling it mid-provision would break the remaining build steps. Turn it
+# off in a post-deploy playbook once SSH keys are distributed via cloud-init.
+- name: Harden SSH — disable root login
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin'
+    line: 'PermitRootLogin no'
+  notify: restart sshd
