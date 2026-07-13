@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Unattended install for Windows Server 2025, Desktop Experience, Standard
-  edition. Adjust before use:
+  Unattended install for Windows Server 2025 Standard, Server Core (no
+  desktop shell). See Autounattend-desktop.xml for the Desktop Experience
+  counterpart — the two differ only in ComputerName and the
+  ImageInstall/OSImage/InstallFrom edition name. Adjust before use:
 
   - <ImageInstall>/<InstallFrom>/<MetaData>/<Value>: must match an edition
     name in the target ISO's install.wim. Check with:
@@ -91,7 +93,7 @@
           <InstallFrom>
             <MetaData wcm:action="add">
               <Key>/IMAGE/NAME</Key>
-              <Value>Windows Server 2025 SERVERSTANDARD</Value>
+              <Value>Windows Server 2025 Standard</Value>
             </MetaData>
           </InstallFrom>
           <InstallTo>
@@ -124,7 +126,7 @@
 
   <settings pass="specialize">
     <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-      <ComputerName>win-builder</ComputerName>
+      <ComputerName>win-core-builder</ComputerName>
       <TimeZone>UTC</TimeZone>
     </component>
     <component name="Microsoft-Windows-SQMApi" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">

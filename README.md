@@ -9,7 +9,10 @@ Ansible, then deploys VMs from those templates with Terraform.
    install (cloud-init `autoinstall` for Ubuntu, a kickstart file for Rocky,
    `Autounattend.xml` for Windows), runs the **Ansible** playbook for that OS
    over SSH/WinRM to install the QEMU guest agent and baseline config, then
-   converts the resulting VM into a Proxmox template.
+   converts the resulting VM into a Proxmox template. The Windows build
+   produces two templates from one `packer build` — Server Core and Server
+   with Desktop Experience — see
+   [packer/windows-server-2025](packer/windows-server-2025).
 2. **Terraform** clones a template into one or more VMs per environment,
    passing per-VM identity (hostname, IP, SSH keys) through Proxmox's
    built-in cloud-init support.
@@ -59,6 +62,8 @@ packer build .
 
 Repeat per OS directory. Each build leaves a template on the configured
 Proxmox node named after the `template_name` variable (e.g. `tpl-ubuntu-2404`).
+`packer/windows-server-2025` builds two templates (`tpl-windows-server-2025-core`
+and `tpl-windows-server-2025-desktop`) in a single `packer build .`.
 
 ## Deploying VMs from a template
 

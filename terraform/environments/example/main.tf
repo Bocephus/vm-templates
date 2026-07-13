@@ -38,18 +38,32 @@ module "rocky_vm01" {
   tags              = ["rocky", "terraform"]
 }
 
-module "windows_vm01" {
+module "windows_core_vm01" {
   source = "../../modules/proxmox-vm"
 
-  name              = "win-vm01"
+  name              = "win-core-vm01"
   target_node       = var.target_node
-  template_vm_id    = 9002 # tpl-windows-server-2025, see packer/windows-server-2025
+  template_vm_id    = 9002 # tpl-windows-server-2025-core, see packer/windows-server-2025
   os_type           = "windows"
   cores             = 4
   memory            = 4096
   disk_datastore_id = var.disk_datastore_id
   disk_size         = 60
-  tags              = ["windows", "terraform"]
+  tags              = ["windows", "windows-core", "terraform"]
+}
+
+module "windows_desktop_vm01" {
+  source = "../../modules/proxmox-vm"
+
+  name              = "win-desktop-vm01"
+  target_node       = var.target_node
+  template_vm_id    = 9003 # tpl-windows-server-2025-desktop, see packer/windows-server-2025
+  os_type           = "windows"
+  cores             = 4
+  memory            = 4096
+  disk_datastore_id = var.disk_datastore_id
+  disk_size         = 60
+  tags              = ["windows", "windows-desktop", "terraform"]
 }
 
 output "ubuntu_vm01_ip" {
@@ -60,6 +74,10 @@ output "rocky_vm01_ip" {
   value = module.rocky_vm01.ipv4_addresses
 }
 
-output "windows_vm01_ip" {
-  value = module.windows_vm01.ipv4_addresses
+output "windows_core_vm01_ip" {
+  value = module.windows_core_vm01.ipv4_addresses
+}
+
+output "windows_desktop_vm01_ip" {
+  value = module.windows_desktop_vm01.ipv4_addresses
 }

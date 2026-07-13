@@ -7,5 +7,8 @@ iso_file            = "local:iso/SERVER_EVAL_x64FRE_en-us.iso"
 virtio_win_iso_file = "local:iso/virtio-win.iso"
 vm_storage_pool     = "local-zfs"
 network_bridge      = "vmbr0"
-template_id         = 9002
-template_name       = "tpl-windows-server-2025"
+
+core_template_id      = 9002
+core_template_name    = "tpl-windows-server-2025-core"
+desktop_template_id   = 9003
+desktop_template_name = "tpl-windows-server-2025-desktop"

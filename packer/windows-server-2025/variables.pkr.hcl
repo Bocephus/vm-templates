@@ -49,14 +49,24 @@ variable "network_bridge" {
   default = "vmbr0"
 }
 
-variable "template_name" {
+variable "core_template_name" {
   type    = string
-  default = "tpl-windows-server-2025"
+  default = "tpl-windows-server-2025-core"
 }
 
-variable "template_id" {
+variable "core_template_id" {
   type        = number
-  description = "Proxmox VMID for the resulting template"
+  description = "Proxmox VMID for the resulting Server Core template"
+}
+
+variable "desktop_template_name" {
+  type    = string
+  default = "tpl-windows-server-2025-desktop"
+}
+
+variable "desktop_template_id" {
+  type        = number
+  description = "Proxmox VMID for the resulting Server (Desktop Experience) template"
 }
 
 variable "disk_size" {
@@ -83,5 +93,5 @@ variable "winrm_password" {
   type        = string
   sensitive   = true
   default     = "P@ckerBuild!2025"
-  description = "Local Administrator password — must match answer_files/Autounattend.xml"
+  description = "Local Administrator password — must match answer_files/Autounattend-core.xml and answer_files/Autounattend-desktop.xml"
 }
