@@ -31,8 +31,16 @@ source "proxmox-iso" "ubuntu-2404" {
 
   qemu_agent = true
   cores      = var.cores
+  cpu_type   = "host"
   memory     = var.memory
   scsi_controller = "virtio-scsi-pci"
+
+  bios = "ovmf"
+  efi_config {
+    efi_storage_pool  = var.vm_storage_pool
+    efi_type          = "4m"
+    pre_enrolled_keys = true
+  }
 
   disks {
     disk_size    = var.disk_size

@@ -14,6 +14,16 @@ autoinstall:
   ssh:
     install-server: true
     allow-pw: true
+    # Public half of files/ansible_build_key — regenerate both with
+    # `ssh-keygen -t ed25519 -N "" -f files/ansible_build_key` and paste the
+    # resulting files/ansible_build_key.pub contents in below. See README.
+    # Must live here under `ssh.authorized-keys` (applied by subiquity
+    # directly to the `identity` user during install), not under the
+    # generic `user-data.ssh_authorized_keys` cloud-init passthrough — that
+    # targets cloud-init's "default user" concept, which isn't reliably the
+    # same account.
+    authorized-keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGZJImxC56Sl+IwO9gHBYpmx8XFxNYWhXwiMHLJfp8K2 vm-templates ubuntu-2404 packer build (throwaway, build-time only)"
   storage:
     layout:
       name: direct
@@ -27,8 +37,3 @@ autoinstall:
     - curtin in-target --target=/target -- systemctl enable qemu-guest-agent
   user-data:
     disable_root: true
-    # Public half of files/ansible_build_key — regenerate both with
-    # `ssh-keygen -t ed25519 -N "" -f files/ansible_build_key` and paste the
-    # resulting files/ansible_build_key.pub contents in below. See README.
-    ssh_authorized_keys:
-      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGZJImxC56Sl+IwO9gHBYpmx8XFxNYWhXwiMHLJfp8K2 vm-templates ubuntu-2404 packer build (throwaway, build-time only)"
