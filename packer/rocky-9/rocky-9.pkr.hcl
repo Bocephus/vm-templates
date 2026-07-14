@@ -31,8 +31,16 @@ source "proxmox-iso" "rocky-9" {
 
   qemu_agent      = true
   cores           = var.cores
+  cpu_type        = "host"
   memory          = var.memory
   scsi_controller = "virtio-scsi-pci"
+
+  bios = "ovmf"
+  efi_config {
+    efi_storage_pool  = var.vm_storage_pool
+    efi_type          = "4m"
+    pre_enrolled_keys = true
+  }
 
   disks {
     disk_size    = var.disk_size
@@ -50,15 +58,20 @@ source "proxmox-iso" "rocky-9" {
   cloud_init_storage_pool = var.vm_storage_pool
 
   boot_command = [
-    "<up><wait><tab>",
-    " inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
+    "<up><wait>e",
+    "<down><down><end><wait>",
+    " inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<wait>",
+    "<leftCtrlOn>x<leftCtrlOff>"
   ]
   boot_wait      = "5s"
   http_directory = "http"
+  http_interface = "eth0"
+  http_port_min  = 8300
+  http_port_max  = 8310
 
-  ssh_username = var.ssh_username
-  ssh_password = var.ssh_password
-  ssh_timeout  = "30m"
+  ssh_username         = var.ssh_username
+  ssh_private_key_file = "files/ansible_build_key"
+  ssh_timeout          = "30m"
 
   communicator = "ssh"
 }

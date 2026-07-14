@@ -73,10 +73,3 @@ variable "ssh_username" {
   type    = string
   default = "ansible"
 }
-
-variable "ssh_password" {
-  type        = string
-  default     = "packer"
-  sensitive   = true
-  description = "Temporary password set via kickstart; the account is only used for the duration of the build"
-}

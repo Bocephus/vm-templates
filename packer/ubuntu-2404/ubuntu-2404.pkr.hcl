@@ -57,10 +57,13 @@ source "proxmox-iso" "ubuntu-2404" {
   ]
   boot_wait    = "5s"
   http_directory = "http"
+  http_interface = "eth0"
+  http_port_min  = 8300
+  http_port_max  = 8310
 
-  ssh_username = var.ssh_username
-  ssh_password = var.ssh_password
-  ssh_timeout  = "30m"
+  ssh_username         = var.ssh_username
+  ssh_private_key_file = "files/ansible_build_key"
+  ssh_timeout          = "30m"
 
   communicator = "ssh"
 }
