@@ -5,7 +5,7 @@ variable "name" {
 
 variable "target_node" {
   type        = string
-  description = "Proxmox node to place the VM on"
+  description = "Proxmox node to place the VM on — the short cluster node name (see `pvecm nodes` or `/etc/pve/nodes/`), not the FQDN"
 }
 
 variable "template_vm_id" {

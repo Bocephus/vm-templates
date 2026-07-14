@@ -16,7 +16,7 @@ variable "proxmox_api_token_secret" {
 
 variable "proxmox_node" {
   type        = string
-  description = "Proxmox node to build the template on"
+  description = "Proxmox node to build the template on — the short cluster node name (see `pvecm nodes` or `/etc/pve/nodes/`), not the FQDN"
 }
 
 variable "proxmox_insecure_skip_tls_verify" {

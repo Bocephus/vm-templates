@@ -16,7 +16,7 @@ variable "proxmox_insecure" {
 
 variable "target_node" {
   type        = string
-  description = "Proxmox node to deploy VMs on"
+  description = "Proxmox node to deploy VMs on — the short cluster node name (see `pvecm nodes` or `/etc/pve/nodes/`), not the FQDN"
 }
 
 variable "disk_datastore_id" {
