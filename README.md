@@ -130,7 +130,10 @@ Then paste the printed public key over the existing one in:
 - **rocky-9**: the `sshkey --username=ansible "..."` line in `http/ks.cfg`
   (a separate kickstart command, not a `user` option — pykickstart rejects
   `--sshkey` on the `user` line with `unrecognized arguments`)
-- **ubuntu-2404**: the `ssh_authorized_keys` entry in `http/user-data`
+- **ubuntu-2404**: the `ssh.authorized-keys` entry in `http/user-data`
+  (must be under `ssh`, not the generic `user-data.ssh_authorized_keys`
+  cloud-init passthrough — that targets cloud-init's "default user" concept,
+  which isn't reliably the `identity`-created account)
 
 The key only grants access to a throwaway VM that gets destroyed (or has its
 account provisioned away) before the template is finalized, so committing
