@@ -33,6 +33,10 @@ id_rsa*
 secrets.yml
 vault_pass.txt
 
+# Per-build throwaway SSH keypairs (generate locally, see README)
+packer/*/files/ansible_build_key
+packer/*/files/ansible_build_key.pub
+
 # OS / editor
 .DS_Store
 *.swp
